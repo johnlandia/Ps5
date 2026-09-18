@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instalar PS Gamepad</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:#0E0F12; color:#E8E8E8; font-family:-apple-system,Segoe UI,Roboto,sans-serif;
+    text-align:center; padding:24px;
+  }
+  .card { max-width:420px; }
+  .icon {
+    width:88px; height:88px; border-radius:22px; margin:0 auto 20px;
+    background:#2E7DFF; display:flex; align-items:center; justify-content:center;
+    font-size:40px;
+  }
+  h1 { font-size:22px; margin:0 0 8px; }
+  p { color:#8A8D93; line-height:1.5; font-size:15px; }
+  a.btn {
+    display:inline-block; margin-top:20px; padding:16px 32px; border-radius:14px;
+    background:#2E7DFF; color:#fff; text-decoration:none; font-weight:600; font-size:16px;
+  }
+  a.btn:active { opacity:0.85; }
+  .note { margin-top:18px; font-size:13px; color:#5c5f66; }
+  .missing { background:#3a1d1d; border:1px solid #E0463B; padding:14px; border-radius:12px; color:#f2b8b0; font-size:14px; margin-top:20px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🎮</div>
+    <h1>PS Gamepad</h1>
+    <p>Transforma o teu telemóvel num comando de jogos para PC. O download começa sozinho ao abrir esta página.</p>
+
+    <div id="downloadArea">
+      <a class="btn" id="downloadBtn" href="app-debug.apk" download>Descarregar e instalar</a>
+    </div>
+
+    <p class="note">
+      Depois de descarregar, toca no ficheiro para instalar. O Android pode
+      pedir para autorizares "instalar de fontes desconhecidas" — autoriza
+      só para este ficheiro.
+    </p>
+  </div>
+
+  <script>
+    // Se o app-debug.apk existir nesta pasta, dispara o download automaticamente
+    // (o Android mostra logo a notificação "a descarregar" / "tocar para instalar").
+    // Se não existir, mostra o aviso em vez de um link morto.
+    fetch('app-debug.apk', { method: 'HEAD' }).then(r => {
+      if (!r.ok) throw new Error();
+      document.getElementById('downloadBtn').click();
+    }).catch(() => {
+      document.getElementById('downloadArea').innerHTML =
+        '<div class="missing">O ficheiro do app ainda não foi colocado nesta página. Adiciona o <b>app-debug.apk</b> na mesma pasta deste index.html e publica de novo.</div>';
+    });
+  </script>
+</body>
+</html>
